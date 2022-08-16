@@ -1,27 +1,15 @@
-import React, { MouseEventHandler, ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 import { DropEvent, useDropzone } from "react-dropzone";
-import {
-    UploadMessage,
-    DropContainer,
-    AcceptedFiles,
-    Table,
-    ButtonTrash,
-} from "./styles";
 import { IoMdCloudUpload } from "react-icons/io";
-import { FaTrash } from "react-icons/fa";
-import fileSize from "filesize";
+import Table from "../table/Table";
+import { AcceptedFiles, DropContainer, UploadMessage } from "./styles";
 
 type onDropAcceptedType =
     | (<T extends File>(files: T[], event: DropEvent) => void)
     | undefined;
 
 const Upload: Function = (): ReactElement => {
-    // const [fileUploaded, setFileUploaded] = useState<Array<File>>([]);
     const [fileUploaded, setFileUploaded] = useState<File | null>(null);
-
-    const handleclick: MouseEventHandler<HTMLButtonElement> = (): void => {
-        setFileUploaded(null);
-    };
 
     const handleUpload: onDropAcceptedType = (files: Array<File>): void => {
         setFileUploaded(files[0]);
@@ -75,32 +63,8 @@ const Upload: Function = (): ReactElement => {
                     <IoMdCloudUpload className="icon" />
                 </AcceptedFiles>
             </DropContainer>
-            {fileUploaded ? (
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>Arquivo</th>
-                            <th>Tamanho</th>
-                            <th>Remover</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr key={fileUploaded.name}>
-                            <td>{fileUploaded.name}</td>
-                            <td>{fileSize(fileUploaded.size)}</td>
-                            <td>
-                                <ButtonTrash
-                                    title="Remover Arquivo"
-                                    onClick={handleclick}
-                                >
-                                    <FaTrash />
-                                </ButtonTrash>
-                            </td>
-                        </tr>
-                    </tbody>
-                </Table>
-            ) : (
-                ""
+            {fileUploaded && (
+                <Table file={fileUploaded} setFile={setFileUploaded} />
             )}
         </>
     );

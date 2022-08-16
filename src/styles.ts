@@ -6,7 +6,7 @@ export const Container: StyledComponent<"div", any, {}, never> = styled.div`
     justify-content: center;
     align-items: center;
     padding: 20px;
-    margin: 100px auto;
+    margin: 50px auto;
 `;
 
 export const Content: StyledComponent<"div", any, {}, never> = styled.div`
@@ -27,7 +27,8 @@ export const DivButton: StyledComponent<"div", any, {}, never> = styled.div`
 
 export const Title: StyledComponent<"span", any, {}, never> = styled.span`
     font-size: 1rem;
-    color: #444;
+    color: rgba(69, 90, 100, 0.87);
+    font-weight: 400;
 `;
 
 export const Button: StyledComponent<"button", any, {}, never> = styled.button`

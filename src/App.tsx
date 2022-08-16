@@ -1,16 +1,13 @@
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import "./App.css";
 import Header from "./components/header/Header";
-import {
-    Button,
-    Container,
-    Content,
-    DivButton,
-    Title,
-} from "./components/styles";
+import Loading from "./components/loading/Loading";
 import Upload from "./components/upload/Upload";
+import { Button, Container, Content, DivButton, Title } from "./styles";
 
 function App(): ReactElement {
+    const [loading, setLoading] = useState<boolean>(false);
+
     return (
         <>
             <Header />
@@ -22,7 +19,11 @@ function App(): ReactElement {
                         </Title>
                         <Upload />
                         <DivButton>
-                            <Button>Gerar Gráficos</Button>
+                            {loading ? (
+                                <Loading />
+                            ) : (
+                                <Button>Gerar Gráficos</Button>
+                            )}
                         </DivButton>
                     </form>
                 </Content>
