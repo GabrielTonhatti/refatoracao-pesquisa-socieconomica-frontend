@@ -1,9 +1,8 @@
 import { ApexOptions } from "apexcharts";
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import ReactApexChart from "react-apexcharts";
 
 const chartOptions: ApexOptions = {
-    series: [44, 25],
     chart: {
         width: 380,
         type: "pie",
@@ -28,15 +27,22 @@ const chartOptions: ApexOptions = {
     legend: {
         show: true,
     },
-    labels: ["ADS", "GPI", "GRH", "DSM"],
 };
 
-const PieChart: Function = (): ReactElement => {
+type PropsPieChart = {
+    series?: Array<number>;
+    labels?: Array<string>;
+};
+
+const PieChart: Function = (props: PropsPieChart): ReactElement => {
     return (
         <div className="chart">
             <ReactApexChart
-                options={chartOptions}
-                series={chartOptions.series}
+                options={{
+                    ...chartOptions,
+                    labels: props.labels,
+                }}
+                series={props.series}
                 type="pie"
                 width={400}
             />

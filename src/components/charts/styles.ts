@@ -26,3 +26,34 @@ export const ChartContainer: StyledComponent<
         justify-content: center;
     }
 `;
+
+export const ButtonVoltar: StyledComponent<
+    "button",
+    any,
+    {},
+    never
+> = styled.button`
+    outline: none;
+    padding: 12px;
+    border: 1px solid #008ffb;
+    border-radius: 4px;
+    margin-bottom: -10px;
+    background: #fff;
+    font-weight: 600;
+    color: #008ffb;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+        background: #008ffb;
+        color: #fff;
+    }
+`;
+
+export const TitlePergunta: StyledComponent<"h1", any, {}, never> = styled.h1`
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: rgba(69, 90, 100, 0.87);
+    margin-bottom: 20px;
+`;

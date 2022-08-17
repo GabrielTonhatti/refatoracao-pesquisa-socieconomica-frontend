@@ -22,7 +22,7 @@ const dragReject: FlattenSimpleInterpolation = css`
 `;
 
 const messageColors = {
-    default: "#000",
+    default: "rgba(69, 90, 100, 0.87)",
     error: "#f44336",
     success: "#4caf50",
 };
@@ -38,6 +38,7 @@ export const UploadMessage: StyledComponent<
         messageColors[(props.type as keyof typeof messageColors) || "default"]};
     justify-content: center;
     align-items: center;
+    font-weight: 500;
     padding: 15px 0;
 `;
 
