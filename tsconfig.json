@@ -19,6 +19,7 @@
     "resolveJsonModule": true,
     "noEmitOnError": true,
     "noImplicitAny": true,
+    "noImplicitReturns": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx"

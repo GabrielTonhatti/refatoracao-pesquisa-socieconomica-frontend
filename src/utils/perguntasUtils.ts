@@ -5,6 +5,7 @@ const perguntasBarChart: Array<string> = [
     "Tempo de moradia neste domicílio (Em anos)",
     "Onde você utiliza microcomputadores?",
     "Com qual finalidade você utiliza microcomputadores?",
+    "Qual é o seu estado civil?",
 ];
 
 export default perguntasBarChart;

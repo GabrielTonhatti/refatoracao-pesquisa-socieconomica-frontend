@@ -1,3 +1,4 @@
+import DataCharts from "model/DataCharts";
 import { ReactElement, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Select, { SingleValue } from "react-select";
@@ -13,65 +14,103 @@ type OptionsSelect = {
     label: string;
 };
 
+type HandleChangeSelectType = (event: SingleValue<OptionsSelect>) => void;
+
 const ChartList: Function = (): ReactElement => {
-    const [selectedOption, setSelectedOption] = useState<Array<OptionsSelect>>([
-        { value: "Qual o seu curso?", label: "Qual o seu curso?" },
-        {
-            value: "Qual o período que cursa?",
-            label: "Qual o período que cursa?",
-        },
-        {
-            value: "Qual o estado do Brasil que você nasceu?",
-            label: "Qual o estado do Brasil que você nasceu?",
-        },
-        {
-            value: "Qual sua cidade de residência?",
-            label: "Qual sua cidade de residência?",
-        },
-    ]);
-    const [pergunta, setPergunta] = useState<OptionsSelect>({
-        value: "",
-        label: "",
-    });
-    const [series, setSeries] = useState<Array<number>>([44, 25, 10, 30]);
-    const [categories, setCategories] = useState<Array<string>>([
-        "ADS",
-        "GPI",
-        "GRH",
-        "DSM",
-    ]);
-    const [seriesBarChart, setSeriesBarChart] = useState<Array<DadosChart>>([
-        {
-            data: [44, 25, 10, 30],
-        },
-    ]);
+    const [pergunta, setPergunta] = useState<string>("");
+    const [selectedOption, setSelectedOption] = useState<Array<OptionsSelect>>(
+        []
+    );
+    const [series, setSeries] = useState<Array<number>>([]);
+    const [categories, setCategories] = useState<Array<string>>([]);
+    const [seriesBarChart, setSeriesBarChart] = useState<Array<DadosChart>>([]);
+
+    const updateOptions: Function = (
+        dadosConvertidos: Array<DataCharts>,
+        setSelectedOption: React.Dispatch<
+            React.SetStateAction<Array<OptionsSelect>>
+        >
+    ): void => {
+        const option: Array<OptionsSelect> = dadosConvertidos
+            .map((dado: DataCharts): string => dado.pergunta)
+            .map(
+                (pergunta: string): OptionsSelect => ({
+                    value: pergunta,
+                    label: pergunta,
+                })
+            );
+        setSelectedOption(option);
+    };
+
+    const updateSeries: Function = (dados: DataCharts) => {
+        const dataSeries: Array<number> = dados.respostas.data;
+        setSeries(dataSeries);
+        setSeriesBarChart([{ data: dataSeries }]);
+    };
+
+    const updateCategories: Function = (dados: DataCharts): void => {
+        const dataCategories: Array<string> = dados.respostas.labels;
+        setCategories(dataCategories);
+    };
 
     useEffect((): void => {
-        setPergunta(selectedOption[0]);
-    }, [selectedOption]);
+        const dados: string | null = sessionStorage.getItem("dados");
+
+        if (dados) {
+            const dadosConvertidos: Array<DataCharts> = DataCharts.of(dados);
+
+            updateOptions(dadosConvertidos, setSelectedOption);
+            updateSeries(dadosConvertidos[0]);
+            updateCategories(dadosConvertidos[0]);
+            setPergunta(dadosConvertidos[0].pergunta);
+        }
+    }, []);
+
+    const handleChange: HandleChangeSelectType = (
+        event: SingleValue<OptionsSelect>
+    ): void => {
+        const opcao: string = event ? event.label : "";
+        setPergunta(opcao);
+
+        const dados: Array<DataCharts> = DataCharts.of(
+            sessionStorage.getItem("dados")
+        );
+
+        const dadosFiltrados: DataCharts = dados.find(
+            (data: DataCharts): boolean => data.pergunta === opcao
+        ) as DataCharts;
+
+        updateSeries(dadosFiltrados);
+        updateCategories(dadosFiltrados);
+    };
 
     return (
         <Container>
             <ChartContainer>
                 <TitlePergunta>
-                    {pergunta.label || "Selecione uma pergunta"}
+                    {pergunta || "Selecione uma pergunta"}
                 </TitlePergunta>
-                <Select
-                    defaultValue={selectedOption[0]}
-                    options={selectedOption}
-                    onChange={(event: SingleValue<OptionsSelect>): void => {
-                        const opcao: OptionsSelect = event
-                            ? event
-                            : { value: "", label: "" };
-                        setPergunta(opcao);
-                    }}
-                />
-                {perguntasBarChart.includes(pergunta.label) ? (
-                    <BarChart series={seriesBarChart} categories={categories} />
-                ) : (
-                    <PieChart series={series} labels={categories} />
+                {pergunta && (
+                    <>
+                        <Select
+                            defaultValue={selectedOption[0]}
+                            options={selectedOption}
+                            onChange={handleChange}
+                        />
+                        {perguntasBarChart.includes(pergunta) ? (
+                            <BarChart
+                                series={seriesBarChart}
+                                // categories={categories}
+                                categories={categories.map((categorie) =>
+                                    categorie.split(" ")
+                                )}
+                                horizontal={false}
+                            />
+                        ) : (
+                            <PieChart series={series} labels={categories} />
+                        )}
+                    </>
                 )}
-
                 <DivButton>
                     <Link to="/">
                         <ButtonVoltar>Voltar</ButtonVoltar>

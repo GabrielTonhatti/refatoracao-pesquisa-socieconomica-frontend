@@ -8,6 +8,7 @@ import Upload from "../upload/Upload";
 import { Content, DivButton, Title } from "./styles";
 import api from "../../config/server/api";
 import { AxiosResponse } from "axios";
+import { Pergunta } from "../../utils/types/types";
 
 const FormPlanilha: Function = (): ReactElement => {
     const [loading, setLoading] = useState<boolean>(false);
@@ -30,7 +31,7 @@ const FormPlanilha: Function = (): ReactElement => {
                 "/gerar-relatorio",
                 form
             );
-            const dados: any = await response.data;
+            const dados: Array<Pergunta> = await response.data;
 
             sessionStorage.setItem("dados", JSON.stringify(dados));
 

@@ -9,7 +9,7 @@ const chartOptions: ApexOptions = {
     },
     dataLabels: {
         enabled: true,
-        textAnchor: "middle",
+        textAnchor: "start",
     },
     responsive: [
         {
