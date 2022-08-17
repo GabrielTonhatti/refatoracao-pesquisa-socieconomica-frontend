@@ -3,7 +3,6 @@ import styled, { StyledComponent } from "styled-components";
 export const DivLoading: StyledComponent<"div", any, {}, never> = styled.div`
     display: inline-block;
     position: relative;
-    background: red;
     padding: 12px;
     border-radius: 4px;
     margin-bottom: -10px;

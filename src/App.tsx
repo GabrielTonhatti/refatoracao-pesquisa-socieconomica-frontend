@@ -5,11 +5,9 @@ import { Container } from "./styles";
 
 function App(): ReactElement {
     return (
-        <>
-            <Container>
-                <FormPlanilha />
-            </Container>
-        </>
+        <Container>
+            <FormPlanilha />
+        </Container>
     );
 }
 
