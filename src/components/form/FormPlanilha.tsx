@@ -6,6 +6,8 @@ import Loading from "../loading/Loading";
 import Snackbar from "../snackbar/Snackbar";
 import Upload from "../upload/Upload";
 import { Content, DivButton, Title } from "./styles";
+import api from "../../config/server/api";
+import { AxiosResponse } from "axios";
 
 const FormPlanilha: Function = (): ReactElement => {
     const [loading, setLoading] = useState<boolean>(false);
@@ -17,14 +19,27 @@ const FormPlanilha: Function = (): ReactElement => {
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (
         event: FormEvent
     ): Promise<void> => {
-        event.preventDefault();
-        setLoading(true);
+        try {
+            event.preventDefault();
+            setError(null);
+            setLoading(true);
 
-        setTimeout(() => {
-            setLoading(false);
-            // setError("Teste");
+            const form: FormData = new FormData();
+            form.append("file", fileUploaded as File);
+            const response: AxiosResponse = await api.post(
+                "/gerar-relatorio",
+                form
+            );
+            const dados: any = await response.data;
+
+            sessionStorage.setItem("dados", JSON.stringify(dados));
+
             navigate("/graficos");
-        }, 3000);
+        } catch (error: any) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (

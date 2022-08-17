@@ -11,7 +11,6 @@ export const Content: StyledComponent<"div", any, {}, never> = styled.div`
 
 export const DivButton: StyledComponent<"div", any, {}, never> = styled.div`
     display: flex;
-    /* justify-content: flex-end; */
     justify-content: space-between;
     margin: 1.5rem 0;
     width: 100%;
