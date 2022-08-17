@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
 import { DropEvent, useDropzone } from "react-dropzone";
 import { IoMdCloudUpload } from "react-icons/io";
 import Table from "../table/Table";
@@ -8,11 +8,14 @@ type onDropAcceptedType =
     | (<T extends File>(files: T[], event: DropEvent) => void)
     | undefined;
 
-const Upload: Function = (): ReactElement => {
-    const [fileUploaded, setFileUploaded] = useState<File | null>(null);
+type PropsUpload = {
+    file: File | null;
+    setFile: (file: File | null) => void;
+};
 
+const Upload: Function = (props: PropsUpload): ReactElement => {
     const handleUpload: onDropAcceptedType = (files: Array<File>): void => {
-        setFileUploaded(files[0]);
+        props.setFile(files[0]);
     };
 
     const { getRootProps, getInputProps, isDragActive, isDragReject } =
@@ -63,9 +66,7 @@ const Upload: Function = (): ReactElement => {
                     <IoMdCloudUpload className="icon" />
                 </AcceptedFiles>
             </DropContainer>
-            {fileUploaded && (
-                <Table file={fileUploaded} setFile={setFileUploaded} />
-            )}
+            {props.file && <Table file={props.file} setFile={props.setFile} />}
         </>
     );
 };
