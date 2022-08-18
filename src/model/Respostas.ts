@@ -22,6 +22,7 @@ class Respostas {
     public set data(value: Array<number>) {
         this._data = value;
     }
+
 }
 
 export default Respostas;

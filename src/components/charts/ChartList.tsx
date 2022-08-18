@@ -1,3 +1,4 @@
+import { Turno } from "enums/Turno";
 import DataCharts from "model/DataCharts";
 import {
     ChangeEvent,
@@ -33,6 +34,7 @@ const ChartList: Function = (): ReactElement => {
         { value: "M", label: "Matutino" },
         { value: "N", label: "Noturno" },
     ]);
+    const [turno, setTurno] = useState<string>("");
     const [series, setSeries] = useState<Array<number>>([]);
     const [categories, setCategories] = useState<Array<string>>([]);
     const [seriesBarChart, setSeriesBarChart] = useState<Array<DadosChart>>([]);
@@ -58,25 +60,22 @@ const ChartList: Function = (): ReactElement => {
         setSelectedOption(option);
     };
 
-    const updateSeries: Function = (dados: DataCharts) => {
-        const dataSeries: Array<number> = dados.respostas.data;
-        setSeries(dataSeries);
+    const updateSeries: Function = (series: Array<number>): void => {
+        setSeries(series);
         setSeriesBarChart([
             {
                 name: "Quantidade",
-                data: dataSeries,
+                data: series,
             },
         ]);
     };
 
-    const updateCategories: Function = (dados: DataCharts): void => {
-        const dataCategories: Array<string> = dados.respostas.labels;
-        setCategories(dataCategories);
-        setCategoriesBarChart(
-            dataCategories.map(
-                (categorie: string): Array<string> => categorie.split(" ")
-            )
-        );
+    const updateCategories: Function = (
+        categories: Array<string>,
+        categoriesBarChart: Array<Array<string>>
+    ): void => {
+        setCategories(categories);
+        setCategoriesBarChart(categoriesBarChart);
     };
 
     useEffect((): void => {
@@ -84,11 +83,17 @@ const ChartList: Function = (): ReactElement => {
 
         if (dados) {
             const dadosConvertidos: Array<DataCharts> = DataCharts.of(dados);
-            console.log(dadosConvertidos);
+            const dataCategories: Array<string> =
+                dadosConvertidos[0].respostas.labels;
+            const categoriesBarChart: Array<Array<string>> =
+                obterCategoriesBarChart(dataCategories);
+            const series: Array<number> = dadosConvertidos[0].respostas.data;
+
             updateOptions(dadosConvertidos, setSelectedOption);
-            updateSeries(dadosConvertidos[0]);
-            updateCategories(dadosConvertidos[0]);
+            updateSeries(series);
+            updateCategories(dataCategories, categoriesBarChart);
             setPergunta(dadosConvertidos[0].pergunta);
+            console.log(dadosConvertidos);
         }
     }, []);
 
@@ -105,15 +110,71 @@ const ChartList: Function = (): ReactElement => {
         const dadosFiltrados: DataCharts = dados.find(
             (data: DataCharts): boolean => data.pergunta === opcao
         ) as DataCharts;
+        const dataCategories: Array<string> = dadosFiltrados.respostas.labels;
+        const categoriesBarChart: Array<Array<string>> =
+            obterCategoriesBarChart(dataCategories);
+        const series: Array<number> = dadosFiltrados.respostas.data;
 
-        updateSeries(dadosFiltrados);
-        updateCategories(dadosFiltrados);
+        if (turno !== Turno.GERAL) {
+            atualizarGraficosPorFiltro(opcao, dadosFiltrados);
+        } else {
+            updateCategories(dataCategories, categoriesBarChart);
+            updateSeries(series);
+        }
+    };
+
+    const obterCategoriesBarChart: Function = (
+        dataCategories: Array<string>
+    ): Array<Array<string>> => {
+        return dataCategories.map(
+            (categorie: string): Array<string> => categorie.split(" ")
+        );
+    };
+
+    const atualizarGraficosPorFiltro: Function = (
+        opcao: string,
+        dados: DataCharts
+    ): void => {
+        let dataSeries: Array<number>;
+        let dataCategories: Array<string>;
+        let dataCategoriesBarChart: Array<Array<string>>;
+
+        if (opcao === Turno.MATUTINO) {
+            dataSeries = dados?.respostasMatutino.data as Array<number>;
+            dataCategories = dados?.respostasMatutino.labels;
+            dataCategoriesBarChart = obterCategoriesBarChart(dataCategories);
+            updateSeries(dataSeries);
+            updateCategories(dataCategories, dataCategoriesBarChart);
+        } else if (opcao === Turno.NOTURNO) {
+            dataSeries = dados?.respostasNoturno.data as Array<number>;
+            dataCategories = dados?.respostasNoturno.labels;
+            dataCategoriesBarChart = obterCategoriesBarChart(dataCategories);
+
+            updateSeries(dataSeries);
+            updateCategories(dataCategories, dataCategoriesBarChart);
+        } else {
+            dataSeries = dados?.respostas.data as Array<number>;
+            dataCategories = dados?.respostas.labels;
+            dataCategoriesBarChart = obterCategoriesBarChart(dataCategories);
+
+            updateSeries(dataSeries);
+            updateCategories(dataCategories, dataCategoriesBarChart);
+        }
     };
 
     const handleChangeFilter: ChangeEventHandler<HTMLSelectElement> = (
         event: ChangeEvent<HTMLSelectElement>
     ): void => {
-        console.log("filter", event.target.value);
+        const opcao: string = event.target.value;
+        setTurno(opcao);
+        const dados: Array<DataCharts> = DataCharts.of(
+            sessionStorage.getItem("dados")
+        );
+        const dadosFiltrados: DataCharts = dados.find(
+            (data: DataCharts): boolean => data.pergunta === pergunta
+        ) as DataCharts;
+
+        atualizarGraficosPorFiltro(opcao, dadosFiltrados);
     };
 
     return (
