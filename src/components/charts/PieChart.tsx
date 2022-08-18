@@ -1,6 +1,7 @@
 import { ApexOptions } from "apexcharts";
 import { ReactElement } from "react";
 import ReactApexChart from "react-apexcharts";
+import { colors } from "utils/colors";
 
 const chartOptions: ApexOptions = {
     chart: {
@@ -27,6 +28,7 @@ const chartOptions: ApexOptions = {
     legend: {
         show: true,
     },
+    colors: colors,
 };
 
 type PropsPieChart = {

@@ -24,6 +24,10 @@ const ChartList: Function = (): ReactElement => {
     const [series, setSeries] = useState<Array<number>>([]);
     const [categories, setCategories] = useState<Array<string>>([]);
     const [seriesBarChart, setSeriesBarChart] = useState<Array<DadosChart>>([]);
+    const [categoriesBarChart, setCategoriesBarChart] = useState<
+        Array<string> | Array<Array<string>>
+    >([]);
+    const [horizontal, setHorizontal] = useState<boolean>(false);
 
     const updateOptions: Function = (
         dadosConvertidos: Array<DataCharts>,
@@ -45,12 +49,22 @@ const ChartList: Function = (): ReactElement => {
     const updateSeries: Function = (dados: DataCharts) => {
         const dataSeries: Array<number> = dados.respostas.data;
         setSeries(dataSeries);
-        setSeriesBarChart([{ data: dataSeries }]);
+        setSeriesBarChart([
+            {
+                name: "Quantidade",
+                data: dataSeries,
+            },
+        ]);
     };
 
     const updateCategories: Function = (dados: DataCharts): void => {
         const dataCategories: Array<string> = dados.respostas.labels;
         setCategories(dataCategories);
+        setCategoriesBarChart(
+            dataCategories.map(
+                (categorie: string): Array<string> => categorie.split(" ")
+            )
+        );
     };
 
     useEffect((): void => {
@@ -58,7 +72,7 @@ const ChartList: Function = (): ReactElement => {
 
         if (dados) {
             const dadosConvertidos: Array<DataCharts> = DataCharts.of(dados);
-
+            console.log(dadosConvertidos);
             updateOptions(dadosConvertidos, setSelectedOption);
             updateSeries(dadosConvertidos[0]);
             updateCategories(dadosConvertidos[0]);
@@ -100,11 +114,9 @@ const ChartList: Function = (): ReactElement => {
                         {perguntasBarChart.includes(pergunta) ? (
                             <BarChart
                                 series={seriesBarChart}
-                                // categories={categories}
-                                categories={categories.map((categorie) =>
-                                    categorie.split(" ")
-                                )}
-                                horizontal={false}
+                                categories={categoriesBarChart}
+                                horizontal={horizontal}
+                                distributed={true}
                             />
                         ) : (
                             <PieChart series={series} labels={categories} />

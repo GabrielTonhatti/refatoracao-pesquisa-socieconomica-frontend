@@ -7,7 +7,6 @@ export const ChartContainer: StyledComponent<
     never
 > = styled.div`
     width: 100%;
-    max-width: 800px;
     margin: 30px;
     background: #fff;
     border-radius: 4px;

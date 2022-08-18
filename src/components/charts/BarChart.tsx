@@ -1,6 +1,7 @@
 import { ApexOptions } from "apexcharts";
 import { ReactElement } from "react";
 import ReactApexChart from "react-apexcharts";
+import { colors } from "utils/colors";
 
 const chartBarOptions: ApexOptions = {
     chart: {
@@ -15,9 +16,14 @@ const chartBarOptions: ApexOptions = {
     dataLabels: {
         enabled: true,
     },
+    legend: {
+        show: false,
+    },
+    colors: colors,
 };
 
 export type DadosChart = {
+    name: string;
     data: Array<number>;
 };
 
