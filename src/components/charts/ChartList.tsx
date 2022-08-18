@@ -1,5 +1,12 @@
 import DataCharts from "model/DataCharts";
-import { ReactElement, useEffect, useState } from "react";
+import {
+    ChangeEvent,
+    ChangeEventHandler,
+    ReactElement,
+    useEffect,
+    useState,
+} from "react";
+import { FaFilter } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Select, { SingleValue } from "react-select";
 import { Container } from "../../styles";
@@ -21,6 +28,11 @@ const ChartList: Function = (): ReactElement => {
     const [selectedOption, setSelectedOption] = useState<Array<OptionsSelect>>(
         []
     );
+    const [selectTurno] = useState<Array<OptionsSelect>>([
+        { value: "G", label: "Geral" },
+        { value: "M", label: "Matutino" },
+        { value: "N", label: "Noturno" },
+    ]);
     const [series, setSeries] = useState<Array<number>>([]);
     const [categories, setCategories] = useState<Array<string>>([]);
     const [seriesBarChart, setSeriesBarChart] = useState<Array<DadosChart>>([]);
@@ -98,12 +110,41 @@ const ChartList: Function = (): ReactElement => {
         updateCategories(dadosFiltrados);
     };
 
+    const handleChangeFilter: ChangeEventHandler<HTMLSelectElement> = (
+        event: ChangeEvent<HTMLSelectElement>
+    ): void => {
+        console.log("filter", event.target.value);
+    };
+
     return (
         <Container>
             <ChartContainer>
-                <TitlePergunta>
-                    {pergunta || "Selecione uma pergunta"}
-                </TitlePergunta>
+                <div className="title">
+                    <TitlePergunta>
+                        {pergunta || "Selecione uma pergunta"}
+                    </TitlePergunta>
+
+                    <div className="container-filtro">
+                        <span>
+                            <FaFilter /> Filtro:
+                        </span>
+                        <select
+                            className="filtro"
+                            onChange={handleChangeFilter}
+                        >
+                            {selectTurno.map(
+                                (turno: OptionsSelect): ReactElement => (
+                                    <option
+                                        key={turno.value}
+                                        value={turno.label}
+                                    >
+                                        {turno.label}
+                                    </option>
+                                )
+                            )}
+                        </select>
+                    </div>
+                </div>
                 {pergunta && (
                     <>
                         <Select

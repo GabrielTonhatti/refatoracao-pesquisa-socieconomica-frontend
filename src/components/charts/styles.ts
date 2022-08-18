@@ -24,6 +24,34 @@ export const ChartContainer: StyledComponent<
         align-items: center;
         justify-content: center;
     }
+
+    .title {
+        display: flex;
+        text-align: center;
+        justify-content: space-between;
+
+        .container-filtro {
+            display: grid;
+            width: 200px;
+            grid-template-columns: 1fr 1fr;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(69, 90, 100, 0.87);
+            align-items: flex-start;
+            font-weight: 600;
+
+            .filtro {
+                text-align: center;
+                padding: 2px;
+                outline: none;
+                border: 1px solid #ccc;
+                background-color: #fff;
+                color: rgba(69, 90, 100, 0.87);
+                font-weight: 400;
+                border-radius: 4px;
+            }
+        }
+    }
 `;
 
 export const ButtonVoltar: StyledComponent<
