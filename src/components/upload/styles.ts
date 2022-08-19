@@ -57,11 +57,30 @@ export const DropContainer: StyledComponent<
     font-size: 1.5rem;
     transition: height 0.2s ease;
     margin-top: 1rem;
+    text-align: center;
 
     ${(props: PropsDropzone): false | FlattenSimpleInterpolation =>
         props.isDragActive && dragActive};
     ${(props: PropsDropzone): false | FlattenSimpleInterpolation =>
         props.isDragReject && dragReject};
+
+    @media (max-width: 804px) {
+        font-size: 1.2rem;
+    }
+
+    @media (max-width: 682px) {
+        font-size: 1rem;
+    }
+
+    @media (max-width: 606px) {
+        font-size: 14px;
+    }
+
+    @media (max-width: 556px) {
+        font-size: 12px;
+    }
+
+   
 `;
 
 export const AcceptedFiles: StyledComponent<"p", any, {}, never> = styled.p`
