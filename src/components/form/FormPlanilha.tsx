@@ -14,8 +14,15 @@ const FormPlanilha: Function = (): ReactElement => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [fileUploaded, setFileUploaded] = useState<File | null>(null);
+    const [open, setOpen] = useState<boolean>(false);
 
     const navigate: NavigateFunction = useNavigate();
+
+    const fecharSnackbar: Function = (): void => {
+        setTimeout((): void => {
+            setOpen(false);
+        }, 5000);
+    };
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (
         event: FormEvent
@@ -33,11 +40,19 @@ const FormPlanilha: Function = (): ReactElement => {
             );
             const dados: Array<Pergunta> = await response.data;
 
-            sessionStorage.setItem("dados", JSON.stringify(dados));
+            if (dados.length > 0) {
+                sessionStorage.setItem("dados", JSON.stringify(dados));
 
-            navigate("/graficos");
+                navigate("/graficos");
+            } else {
+                setError("Não foi possível gerar o relatório");
+                setOpen(true);
+            }
         } catch (error: any) {
-            setError(error.message);
+            const { message } = error.response.data;
+            setError(message);
+            setOpen(true);
+            fecharSnackbar();
         } finally {
             setLoading(false);
         }
@@ -50,7 +65,11 @@ const FormPlanilha: Function = (): ReactElement => {
                     <Title>
                         Importação da planilha de geração dos gráficos
                     </Title>
-                    <Upload file={fileUploaded} setFile={setFileUploaded} />
+                    <Upload
+                        loading={loading}
+                        file={fileUploaded}
+                        setFile={setFileUploaded}
+                    />
                     <DivButton>
                         <ButtonDownload href="Dados.xlsx" download="Dados">
                             Download planilha modelo
@@ -69,7 +88,7 @@ const FormPlanilha: Function = (): ReactElement => {
             {error && (
                 <Snackbar
                     type="error"
-                    open={true}
+                    open={open}
                     onClose={(): void => setError(null)}
                 >
                     {error}

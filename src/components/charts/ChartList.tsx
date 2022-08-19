@@ -41,7 +41,6 @@ const ChartList: Function = (): ReactElement => {
     const [categoriesBarChart, setCategoriesBarChart] = useState<
         Array<string> | Array<Array<string>>
     >([]);
-    const [horizontal, setHorizontal] = useState<boolean>(false);
 
     const updateOptions: Function = (
         dadosConvertidos: Array<DataCharts>,
@@ -126,9 +125,9 @@ const ChartList: Function = (): ReactElement => {
     const obterCategoriesBarChart: Function = (
         dataCategories: Array<string>
     ): Array<Array<string>> => {
-        return dataCategories.map(
-            (categorie: string): Array<string> => categorie.split(" ")
-        );
+        return dataCategories
+            .map((data: string): string => data.toString())
+            .map((categorie: string): Array<string> => categorie.split(" "));
     };
 
     const atualizarGraficosPorFiltro: Function = (
@@ -212,12 +211,12 @@ const ChartList: Function = (): ReactElement => {
                             defaultValue={selectedOption[0]}
                             options={selectedOption}
                             onChange={handleChange}
+                            className="perguntas"
                         />
                         {perguntasBarChart.includes(pergunta) ? (
                             <BarChart
                                 series={seriesBarChart}
                                 categories={categoriesBarChart}
-                                horizontal={horizontal}
                                 distributed={true}
                             />
                         ) : (

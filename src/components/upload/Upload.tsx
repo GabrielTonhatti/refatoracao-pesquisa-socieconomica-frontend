@@ -10,6 +10,7 @@ type onDropAcceptedType =
 
 type PropsUpload = {
     file: File | null;
+    loading: boolean;
     setFile: (file: File | null) => void;
 };
 
@@ -66,7 +67,13 @@ const Upload: Function = (props: PropsUpload): ReactElement => {
                     <IoMdCloudUpload className="icon" />
                 </AcceptedFiles>
             </DropContainer>
-            {props.file && <Table file={props.file} setFile={props.setFile} />}
+            {props.file && (
+                <Table
+                    loading={props.loading}
+                    file={props.file}
+                    setFile={props.setFile}
+                />
+            )}
         </>
     );
 };

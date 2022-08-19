@@ -5,6 +5,7 @@ import { ButtonTrash, TableStyle } from "./styles";
 
 type TableProps = {
     file: File;
+    loading: boolean;
     setFile: React.Dispatch<React.SetStateAction<File | null>>;
 };
 
@@ -30,6 +31,7 @@ const Table: Function = (props: TableProps): ReactElement => {
                         <ButtonTrash
                             title="Remover Arquivo"
                             onClick={handleclick}
+                            disabled={props.loading}
                         >
                             <FaTrash />
                         </ButtonTrash>

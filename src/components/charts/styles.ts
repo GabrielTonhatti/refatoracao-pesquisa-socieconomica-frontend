@@ -17,6 +17,10 @@ export const ChartContainer: StyledComponent<
     text-align: center;
     align-items: center;
 
+    .perguntas {
+        z-index: 1000;
+    }
+
     .chart {
         display: flex;
         width: 100%;

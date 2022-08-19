@@ -54,7 +54,7 @@ const BarChart: BarChartType = (props: PropsBarChart): ReactElement => {
                     ...chartBarOptions.plotOptions,
                     bar: {
                         distributed: props.distributed,
-                        horizontal: props.horizontal,
+                        horizontal: false,
                     },
                 },
             }}

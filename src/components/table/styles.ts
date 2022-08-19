@@ -1,4 +1,8 @@
-import styled, { StyledComponent } from "styled-components";
+import styled, {
+    css,
+    FlattenSimpleInterpolation,
+    StyledComponent,
+} from "styled-components";
 
 export const TableStyle: StyledComponent<
     "table",
@@ -48,6 +52,16 @@ export const TableStyle: StyledComponent<
     }
 `;
 
+const buttonDisabled: FlattenSimpleInterpolation = css`
+    color: #ddd;
+    transition: 0.2s ease-in-out;
+    cursor: default;
+`;
+
+type PropsButton = {
+    disabled?: boolean;
+};
+
 export const ButtonTrash: StyledComponent<
     "button",
     any,
@@ -60,4 +74,7 @@ export const ButtonTrash: StyledComponent<
     cursor: pointer;
     outline: none;
     color: #444;
+
+    ${(props: PropsButton): false | FlattenSimpleInterpolation | undefined =>
+        props.disabled && buttonDisabled}
 `;
