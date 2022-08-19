@@ -11,7 +11,9 @@ import { FaFilter } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Select, { SingleValue } from "react-select";
 import { Container } from "../../styles";
-import perguntasBarChart from "../../utils/perguntasUtils";
+import perguntasBarChart, {
+    perguntarBarChartHorizontal,
+} from "../../utils/perguntasUtils";
 import { DivButton } from "../form/styles";
 import BarChart, { DadosChart } from "./BarChart";
 import PieChart from "./PieChart";
@@ -34,6 +36,7 @@ const ChartList: Function = (): ReactElement => {
         { value: "M", label: "Matutino" },
         { value: "N", label: "Noturno" },
     ]);
+    // TODO: Verificar se o turno está atualizando com o gráfico
     const [turno, setTurno] = useState<string>("");
     const [series, setSeries] = useState<Array<number>>([]);
     const [categories, setCategories] = useState<Array<string>>([]);
@@ -41,6 +44,7 @@ const ChartList: Function = (): ReactElement => {
     const [categoriesBarChart, setCategoriesBarChart] = useState<
         Array<string> | Array<Array<string>>
     >([]);
+    const [horizontal, setHorizontal] = useState<boolean>(true);
 
     const updateOptions: Function = (
         dadosConvertidos: Array<DataCharts>,
@@ -113,6 +117,12 @@ const ChartList: Function = (): ReactElement => {
         const categoriesBarChart: Array<Array<string>> =
             obterCategoriesBarChart(dataCategories);
         const series: Array<number> = dadosFiltrados.respostas.data;
+
+        if (perguntarBarChartHorizontal.includes(opcao)) {
+            setHorizontal(true);
+        } else {
+            setHorizontal(false);
+        }
 
         if (turno !== Turno.GERAL) {
             atualizarGraficosPorFiltro(opcao, dadosFiltrados);
@@ -218,6 +228,7 @@ const ChartList: Function = (): ReactElement => {
                                 series={seriesBarChart}
                                 categories={categoriesBarChart}
                                 distributed={true}
+                                horizontal={horizontal}
                             />
                         ) : (
                             <PieChart series={series} labels={categories} />
