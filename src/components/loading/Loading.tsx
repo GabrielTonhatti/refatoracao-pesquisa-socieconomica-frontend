@@ -1,4 +1,4 @@
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress } from "@mui/material";
 import { ReactElement } from "react";
 import { DivLoading } from "./styles";
 
