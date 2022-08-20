@@ -17,6 +17,9 @@ const chartBarOptions: ApexOptions = {
         {
             breakpoint: 1000,
             options: {
+                dataLabels: {
+                    enabled: false,
+                },
                 plotOptions: {
                     bar: {
                         horizontal: false,
@@ -34,14 +37,14 @@ const chartBarOptions: ApexOptions = {
                 },
                 yaxis: {
                     labels: {
-                        show: false,
+                        show: true,
                     },
                 },
             },
         },
     ],
     dataLabels: {
-        enabled: true,
+        enabled: false,
     },
     legend: {
         show: true,
