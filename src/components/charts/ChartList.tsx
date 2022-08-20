@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import { Turno } from "enums/Turno";
 import DataCharts from "model/DataCharts";
 import {
@@ -13,6 +14,7 @@ import Select, { SingleValue } from "react-select";
 import { Container } from "../../styles";
 import perguntasBarChart, {
     perguntarBarChartHorizontal,
+    peruntasNaoExibirLabel,
 } from "../../utils/perguntasUtils";
 import { DivButton } from "../form/styles";
 import BarChart, { DadosChart } from "./BarChart";
@@ -36,7 +38,6 @@ const ChartList: Function = (): ReactElement => {
         { value: "M", label: "Matutino" },
         { value: "N", label: "Noturno" },
     ]);
-    // TODO: Verificar se o turno está atualizando com o gráfico
     const [turno, setTurno] = useState<string>("");
     const [series, setSeries] = useState<Array<number>>([]);
     const [categories, setCategories] = useState<Array<string>>([]);
@@ -45,6 +46,8 @@ const ChartList: Function = (): ReactElement => {
         Array<string> | Array<Array<string>>
     >([]);
     const [horizontal, setHorizontal] = useState<boolean>(true);
+    const showLabel: boolean = useMediaQuery("(max-width: 768px)");
+    const naoExibirLabel: boolean = peruntasNaoExibirLabel.includes(pergunta);
 
     const updateOptions: Function = (
         dadosConvertidos: Array<DataCharts>,
@@ -96,7 +99,6 @@ const ChartList: Function = (): ReactElement => {
             updateSeries(series);
             updateCategories(dataCategories, categoriesBarChart);
             setPergunta(dadosConvertidos[0].pergunta);
-            console.log(dadosConvertidos);
         }
     }, []);
 
@@ -125,7 +127,7 @@ const ChartList: Function = (): ReactElement => {
         }
 
         if (turno !== Turno.GERAL) {
-            atualizarGraficosPorFiltro(opcao, dadosFiltrados);
+            atualizarGraficosPorFiltro(turno, dadosFiltrados);
         } else {
             updateCategories(dataCategories, categoriesBarChart);
             updateSeries(series);
@@ -141,20 +143,20 @@ const ChartList: Function = (): ReactElement => {
     };
 
     const atualizarGraficosPorFiltro: Function = (
-        opcao: string,
+        opcaoTurno: string,
         dados: DataCharts
     ): void => {
         let dataSeries: Array<number>;
         let dataCategories: Array<string>;
         let dataCategoriesBarChart: Array<Array<string>>;
 
-        if (opcao === Turno.MATUTINO) {
+        if (opcaoTurno === Turno.MATUTINO) {
             dataSeries = dados?.respostasMatutino.data as Array<number>;
             dataCategories = dados?.respostasMatutino.labels;
             dataCategoriesBarChart = obterCategoriesBarChart(dataCategories);
             updateSeries(dataSeries);
             updateCategories(dataCategories, dataCategoriesBarChart);
-        } else if (opcao === Turno.NOTURNO) {
+        } else if (opcaoTurno === Turno.NOTURNO) {
             dataSeries = dados?.respostasNoturno.data as Array<number>;
             dataCategories = dados?.respostasNoturno.labels;
             dataCategoriesBarChart = obterCategoriesBarChart(dataCategories);
@@ -229,6 +231,7 @@ const ChartList: Function = (): ReactElement => {
                                 categories={categoriesBarChart}
                                 distributed={true}
                                 horizontal={horizontal}
+                                showLabel={showLabel || naoExibirLabel}
                             />
                         ) : (
                             <PieChart series={series} labels={categories} />

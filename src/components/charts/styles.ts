@@ -56,6 +56,19 @@ export const ChartContainer: StyledComponent<
             }
         }
     }
+
+    @media (max-width: 600px) {
+        .perguntas {
+            width: 90%;
+            font-size: 12px;
+        }
+    }
+    
+    @media (max-width: 425px) {
+        .perguntas {
+            font-size: 10px;
+        }
+    }
 `;
 
 export const ButtonVoltar: StyledComponent<
@@ -87,4 +100,16 @@ export const TitlePergunta: StyledComponent<"h1", any, {}, never> = styled.h1`
     font-weight: 600;
     color: rgba(69, 90, 100, 0.87);
     margin-bottom: 20px;
+
+    @media (max-width: 768px) {
+        font-size: 1.2rem;
+    }
+
+    @media (max-width: 600px) {
+        font-size: 1rem;
+    }
+
+    @media (max-width: 425px) {
+        font-size: 12px;
+    }
 `;

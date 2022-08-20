@@ -32,6 +32,7 @@ type CategoriesType = string | Array<string>;
 type PropsBarChart = {
     series: Array<DadosChart>;
     categories: Array<CategoriesType>;
+    showLabel: boolean;
     distributed?: boolean;
     horizontal?: boolean;
 };
@@ -49,7 +50,10 @@ const BarChart: BarChartType = (props: PropsBarChart): ReactElement => {
         <ReactApexChart
             options={{
                 ...chartBarOptions,
-                xaxis: { categories: props.categories },
+                xaxis: {
+                    categories: props.categories,
+                    labels: { show: !props.showLabel },
+                },
                 plotOptions: {
                     ...chartBarOptions.plotOptions,
                     bar: {

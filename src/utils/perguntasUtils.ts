@@ -27,7 +27,7 @@ const perguntasBarChart: Array<string> = [
     "No seu domicílio tem?",
     "Se você lê jornal, quais os assuntos que mais lê?",
     "Quais fontes de entretenimento cultural você usa?",
-    "Qual o meio de transporte você usa para vir à escola?"
+    "Qual o meio de transporte você usa para vir à escola?",
 ];
 
 export const perguntarBarChartHorizontal: Array<string> = [
@@ -37,7 +37,11 @@ export const perguntarBarChartHorizontal: Array<string> = [
     "Agora, considere seu conhecimento sobre idiomas [Inglês]",
     "Agora, considere seu conhecimento sobre idiomas [Espanhol]",
     "Agora, considere seu conhecimento sobre idiomas [Outro Idioma]",
-    "Qual o meio de transporte você usa para vir à escola?"
+    "Qual o meio de transporte você usa para vir à escola?",
+];
+
+export const peruntasNaoExibirLabel: Array<string> = [
+    "Qual a empresa que você está contratado agora?",
 ];
 
 export default perguntasBarChart;
