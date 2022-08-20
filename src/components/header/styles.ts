@@ -85,21 +85,21 @@ export const HeaderStyle: StyledComponent<
         }
 
         span {
-            font-size: 16px;
+            font-size: 1rem;
         }
     }
 
     @media (max-width: 474px) {
         .img1 {
-            width: 70px;
+            width: 60px;
         }
 
         .img2 {
-            width: 126px;
+            width: 116px;
         }
 
         span {
-            font-size: 12px;
+            font-size: 14px;
         }
     }
 
@@ -113,21 +113,21 @@ export const HeaderStyle: StyledComponent<
         }
 
         span {
-            font-size: 10px;
+            font-size: 12px;
         }
     }
 
     @media (max-width: 320px) {
         .img1 {
-            width: 40px;
+            width: 30px;
         }
 
         .img2 {
-            width: 96px;
+            width: 66px;
         }
 
         span {
-            font-size: 8px;
+            font-size: 12px;
         }
     }
 `;

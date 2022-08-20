@@ -40,8 +40,4 @@ export const perguntarBarChartHorizontal: Array<string> = [
     "Qual o meio de transporte você usa para vir à escola?",
 ];
 
-export const peruntasNaoExibirLabel: Array<string> = [
-    "Qual a empresa que você está contratado agora?",
-];
-
 export default perguntasBarChart;

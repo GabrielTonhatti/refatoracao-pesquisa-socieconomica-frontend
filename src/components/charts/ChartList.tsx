@@ -1,4 +1,3 @@
-import { useMediaQuery } from "@mui/material";
 import { Turno } from "enums/Turno";
 import DataCharts from "model/DataCharts";
 import {
@@ -14,7 +13,6 @@ import Select, { SingleValue } from "react-select";
 import { Container } from "../../styles";
 import perguntasBarChart, {
     perguntarBarChartHorizontal,
-    peruntasNaoExibirLabel,
 } from "../../utils/perguntasUtils";
 import { DivButton } from "../form/styles";
 import BarChart, { DadosChart } from "./BarChart";
@@ -46,9 +44,6 @@ const ChartList: Function = (): ReactElement => {
         Array<string> | Array<Array<string>>
     >([]);
     const [horizontal, setHorizontal] = useState<boolean>(true);
-    const showLabel: boolean = useMediaQuery("(max-width: 768px)");
-    const naoExibirLabel: boolean = peruntasNaoExibirLabel.includes(pergunta);
-
     const updateOptions: Function = (
         dadosConvertidos: Array<DataCharts>,
         setSelectedOption: React.Dispatch<
@@ -198,7 +193,7 @@ const ChartList: Function = (): ReactElement => {
 
                     <div className="container-filtro">
                         <span>
-                            <FaFilter /> Filtro:
+                            <FaFilter className="icon-filtro" /> Filtro:
                         </span>
                         <select
                             className="filtro"
@@ -231,7 +226,6 @@ const ChartList: Function = (): ReactElement => {
                                 categories={categoriesBarChart}
                                 distributed={true}
                                 horizontal={horizontal}
-                                showLabel={showLabel || naoExibirLabel}
                             />
                         ) : (
                             <PieChart series={series} labels={categories} />

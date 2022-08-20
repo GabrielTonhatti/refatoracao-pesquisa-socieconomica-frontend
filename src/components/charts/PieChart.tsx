@@ -4,10 +4,6 @@ import ReactApexChart from "react-apexcharts";
 import { colors } from "utils/colors";
 
 const chartOptions: ApexOptions = {
-    chart: {
-        width: 380,
-        type: "pie",
-    },
     dataLabels: {
         enabled: true,
         textAnchor: "start",
@@ -17,16 +13,20 @@ const chartOptions: ApexOptions = {
             breakpoint: 480,
             options: {
                 chart: {
-                    width: 200,
+                    width: 260,
                 },
                 legend: {
                     position: "bottom",
+                    fontSize: "10px",
                 },
             },
         },
     ],
     legend: {
         show: true,
+        position: "right",
+        horizontalAlign: "center",
+        fontSize: "14px",
     },
     colors: colors,
 };
@@ -46,7 +46,7 @@ const PieChart: Function = (props: PropsPieChart): ReactElement => {
                 }}
                 series={props.series}
                 type="pie"
-                width={400}
+                width={500}
             />
         </div>
     );

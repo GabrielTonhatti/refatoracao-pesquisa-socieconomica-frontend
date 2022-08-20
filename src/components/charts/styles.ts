@@ -39,7 +39,6 @@ export const ChartContainer: StyledComponent<
             width: 200px;
             grid-template-columns: 1fr 1fr;
             justify-content: space-between;
-            align-items: center;
             color: rgba(69, 90, 100, 0.87);
             align-items: flex-start;
             font-weight: 600;
@@ -57,14 +56,58 @@ export const ChartContainer: StyledComponent<
         }
     }
 
+    @media (max-width: 768px) {
+        .container-filtro {
+            font-size: 14px;
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr 1fr;
+            max-width: 80px;
+            height: 60px;
+
+            span {
+                grid-row: 1;
+            }
+
+            .icon-filtro {
+                font-size: 10px;
+            }
+
+            .filtro {
+                font-size: 12px;
+                grid-row: 2;
+                margin-top: -10px;
+            }
+        }
+    }
+
     @media (max-width: 600px) {
         .perguntas {
             width: 90%;
             font-size: 12px;
         }
     }
-    
+
     @media (max-width: 425px) {
+        .title {
+            flex-direction: column;
+            margin-bottom: -20px;
+            font-size: 12px;
+
+            .container-filtro {
+                display: flex;
+                align-items: center;
+                max-width: 160px;
+                
+                span {
+                    margin-top: -10px;
+                }
+
+                .filtro {
+                    font-size: 10px;
+                }
+            }
+        }
+
         .perguntas {
             font-size: 10px;
         }
@@ -110,6 +153,6 @@ export const TitlePergunta: StyledComponent<"h1", any, {}, never> = styled.h1`
     }
 
     @media (max-width: 425px) {
-        font-size: 12px;
+        font-size: 14px;
     }
 `;

@@ -13,11 +13,44 @@ const chartBarOptions: ApexOptions = {
             borderRadius: 4,
         },
     },
+    responsive: [
+        {
+            breakpoint: 1000,
+            options: {
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                    },
+                },
+                legend: {
+                    position: "bottom",
+                    show: true,
+                    fontSize: "8px",
+                },
+                xaxis: {
+                    labels: {
+                        show: false,
+                    },
+                },
+                yaxis: {
+                    labels: {
+                        show: false,
+                    },
+                },
+            },
+        },
+    ],
     dataLabels: {
         enabled: true,
     },
     legend: {
-        show: false,
+        show: true,
+        fontSize: "14px",
+    },
+    yaxis: {
+        labels: {
+            show: true,
+        },
     },
     colors: colors,
 };
@@ -32,7 +65,6 @@ type CategoriesType = string | Array<string>;
 type PropsBarChart = {
     series: Array<DadosChart>;
     categories: Array<CategoriesType>;
-    showLabel: boolean;
     distributed?: boolean;
     horizontal?: boolean;
 };
@@ -52,7 +84,7 @@ const BarChart: BarChartType = (props: PropsBarChart): ReactElement => {
                 ...chartBarOptions,
                 xaxis: {
                     categories: props.categories,
-                    labels: { show: !props.showLabel },
+                    labels: { show: false },
                 },
                 plotOptions: {
                     ...chartBarOptions.plotOptions,
