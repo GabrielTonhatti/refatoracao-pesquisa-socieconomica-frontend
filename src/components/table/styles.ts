@@ -50,6 +50,40 @@ export const TableStyle: StyledComponent<
             }
         }
     }
+
+    @media (max-width: 425px) {
+        thead,
+        tbody {
+            font-size: 10px;
+        }
+
+        tbody {
+            td {
+                button {
+                    .trash {
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 375px) {
+        thead,
+        tbody {
+            font-size: 8px;
+        }
+
+        tbody {
+            td {
+                button {
+                    .trash {
+                        font-size: 10px;
+                    }
+                }
+            }
+        }
+    }
 `;
 
 const buttonDisabled: FlattenSimpleInterpolation = css`

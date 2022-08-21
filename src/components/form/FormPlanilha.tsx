@@ -48,7 +48,6 @@ const FormPlanilha: Function = (): ReactElement => {
                 setError("Não foi possível gerar o relatório");
                 setOpen(true);
             }
-            console.log(dados);
         } catch (error: any) {
             const { message } = error.response.data;
             setError(message);

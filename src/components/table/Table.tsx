@@ -33,7 +33,7 @@ const Table: Function = (props: TableProps): ReactElement => {
                             onClick={handleclick}
                             disabled={props.loading}
                         >
-                            <FaTrash />
+                            <FaTrash className="trash" />
                         </ButtonTrash>
                     </td>
                 </tr>

@@ -19,6 +19,9 @@ const chartOptions: ApexOptions = {
                     position: "bottom",
                     fontSize: "10px",
                 },
+                dataLabels: {
+                    enabled: false,
+                },
             },
         },
     ],

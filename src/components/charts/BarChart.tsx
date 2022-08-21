@@ -44,7 +44,7 @@ const chartBarOptions: ApexOptions = {
         },
     ],
     dataLabels: {
-        enabled: false,
+        enabled: true,
     },
     legend: {
         show: true,
