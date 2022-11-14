@@ -24,6 +24,7 @@ const Upload: Function = (props: PropsUpload): ReactElement => {
             accept: {
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
                     [],
+                    "application/wps-office.xlsx": [],
             },
             onDropAccepted: handleUpload,
         });
